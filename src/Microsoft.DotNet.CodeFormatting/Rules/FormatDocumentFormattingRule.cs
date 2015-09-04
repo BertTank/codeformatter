@@ -14,6 +14,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis.VisualBasic;
+using Microsoft.CodeAnalysis.Options;
 
 namespace Microsoft.DotNet.CodeFormatting.Rules
 {
@@ -39,7 +40,7 @@ namespace Microsoft.DotNet.CodeFormatting.Rules
 
         public async Task<SyntaxNode> ProcessAsync(Document document, SyntaxNode syntaxNode, CancellationToken cancellationToken)
         {
-            document = await Formatter.FormatAsync(document, cancellationToken: cancellationToken);
+			document = await Formatter.FormatAsync(document, GetCustomOptions(document), cancellationToken);
 
             if (!_options.PreprocessorConfigurations.IsDefaultOrEmpty)
             {
@@ -76,5 +77,14 @@ namespace Microsoft.DotNet.CodeFormatting.Rules
 
             throw new NotSupportedException();
         }
+
+		private static OptionSet GetCustomOptions(Document document)
+		{
+			var optionSet = document?.Project?.Solution?.Workspace?.Options;
+			if (optionSet != null)
+				return optionSet.WithChangedOption(FormattingOptions.UseTabs, "C#", true);
+
+			return null;
+		}
     }
 }
