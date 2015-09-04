@@ -5,6 +5,10 @@
 CodeFormatter is a tool that uses Roslyn to automatically rewrite the source to
 follow our coding styles, which are [documented here][corefx-coding-style].
 
+**FORK NOTE:** This fork was created to customize the default behavior of the codeformatter:
+ - **use tabs** instead of spaces for code indenting
+ - **no Microsoft-copyright** by default (can be activated with param ```/withcopyright```)
+
 [corefx-coding-style]: https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/coding-style.md
 
 ## Prerequisites
