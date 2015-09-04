@@ -124,7 +124,7 @@ namespace CodeFormatter
         private const string RuleDisabledSwitch = "/rule-:";
         private const string Usage = 
 @"CodeFormatter [/file:<filename>] [/lang:<language>] [/c:<config>[,<config>...]>]
-    [/copyright:<file> | /nocopyright] [/tables] [/nounicode] 
+    [/copyright:<file> | /withcopyright] [/tables] [/nounicode] 
     [/rule(+|-):rule1,rule2,...]  [/verbose]
     <project, solution or response file>
 
@@ -135,7 +135,7 @@ namespace CodeFormatter
                    should run under.
     /copyright   - Specifies file containing copyright header.
                    Use ConvertTests to convert MSTest tests to xUnit.
-    /nocopyright - Do not update the copyright message.
+    /withcopyright - Updates the copyright message.
     /tables      - Let tables opt out of formatting by defining
                    DOTNET_FORMATTER
     /nounicode   - Do not convert unicode strings to escape sequences
@@ -169,7 +169,9 @@ namespace CodeFormatter
             var allowTables = false;
             var verbose = false;
 
-            for (int i = 0; i < args.Length; i++)
+			ruleMap = ruleMap.SetItem(FormattingDefaults.CopyrightRuleName, false);
+
+			for (int i = 0; i < args.Length; i++)
             {
                 string arg = args[i];
                 if (arg.StartsWith(ConfigSwitch, StringComparison.OrdinalIgnoreCase))
@@ -198,9 +200,9 @@ namespace CodeFormatter
                 {
                     language = arg.Substring(LanguageSwitch.Length);
                 }
-                else if (comparer.Equals(arg, "/nocopyright"))
+                else if (comparer.Equals(arg, "/withcopyright"))
                 {
-                    ruleMap = ruleMap.SetItem(FormattingDefaults.CopyrightRuleName, false);
+                    ruleMap = ruleMap.SetItem(FormattingDefaults.CopyrightRuleName, true);
                 }
                 else if (comparer.Equals(arg, "/nounicode"))
                 {

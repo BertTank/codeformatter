@@ -84,9 +84,9 @@ namespace Microsoft.DotNet.CodeFormatting.Tests
         }
 
         [Fact]
-        public void NoCopyright()
+        public void WithCopyright()
         {
-            var options = Parse("/nocopyright", "test.csproj");
+            var options = Parse("/withcopyright", "test.csproj");
             Assert.False(options.RuleMap[FormattingDefaults.CopyrightRuleName]);
             Assert.Equal(new[] { "test.csproj" }, options.FormatTargets);
         }
