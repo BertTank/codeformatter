@@ -131,6 +131,11 @@ namespace Microsoft.DotNet.CodeFormatting.Rules
 			if (service != null)
 			{
 				options = (options ?? workspace.Options);
+
+				// edit behavior: use tabs instead of spaces!
+				if (options != null)
+					options = options.WithChangedOption(FormattingOptions.UseTabs, "C#", true);
+
 				rules = (rules ?? getDefaultFormattingRules(workspace, node));
 				return invokeFormat(node, spans, options, rules, cancellationToken, service);
 			}
