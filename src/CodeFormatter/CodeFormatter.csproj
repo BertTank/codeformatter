@@ -107,4 +107,8 @@
     <Copy SourceFiles="$(ProjectDir)IllegalHeaders.md" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
     <Copy SourceFiles="$(ProjectDir)CopyrightHeader.md" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>
